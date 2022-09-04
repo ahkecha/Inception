@@ -9,11 +9,11 @@ RUN  mkdir /etc/ssl/private/; openssl req -x509 -nodes -days 365 -newkey rsa:204
 	-out /etc/ssl/certs/nginx-selfsigned.crt
 
 RUN rm -rf /et/nginx/http.d/*
-ADD $PWD/srcs/entry.sh /usr/local/bin
+ADD $PWD/srcs/entry.ash /usr/local/bin
 ADD $PWD/srcs/default.conf /etc/nginx/http.d/
 
-RUN chmod +x /usr/local/bin/entry.sh
+RUN chmod +x /usr/local/bin/entry.ash
 
 EXPOSE 443
 
-ENTRYPOINT [ "/usr/local/bin/entry.sh" ]
+ENTRYPOINT [ "/usr/local/bin/entry.ash" ]
