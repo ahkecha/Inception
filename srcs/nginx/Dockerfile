@@ -8,7 +8,7 @@ RUN  mkdir /etc/ssl/private/; openssl req -x509 -nodes -days 365 -newkey rsa:204
 	-addext "subjectAltName=DNS:ahkecha.42.fr" -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key \
 	-out /etc/ssl/certs/nginx-selfsigned.crt
 
-RUN rm -rf /et/nginx/http.d/*
+RUN rm -rf /etc/nginx/http.d/*
 ADD $PWD/srcs/entry.ash /usr/local/bin
 ADD $PWD/srcs/default.conf /etc/nginx/http.d/
 

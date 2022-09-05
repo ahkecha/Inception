@@ -1,0 +1,48 @@
+version: '3'
+services:
+        mariadb:
+            image: mariadb:local
+            build: ./srcs/mariadb
+            container_name: mariadb
+            volumes:
+                - vMariadb:/var/lib/mysql
+            ports:
+                - "3306:3306"
+            env_file:
+                - "./.env"
+            restart: always
+        wordpress:
+            image: wordpress:local
+            build: ./srcs/wordpress
+            container_name: wp
+            volumes:
+                - vWordpress:/var/www/html
+            env_file:
+                - "./.env"
+            depends_on:
+                - mariadb
+        nginx:
+            image: nginx:local
+            build: ./srcs/nginx/
+            container_name: nginx
+            volumes:
+                - vWordpress:/var/www/html
+            ports:
+                - "443:443"
+            networks:
+                - wordpress
+
+volumes:
+    vWordpress:
+        driver_opts:
+            type: none
+            device: ./data/wordpress/
+            o: bind
+    vMariadb:
+        driver_opts:
+            type: none
+            device: ./data/mariadb/
+
+networks:
+    wordpress:
+        driver: bridge
