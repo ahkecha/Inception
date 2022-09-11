@@ -10,4 +10,5 @@ ADD $PWD/srcs/entry.sh /usr/local/bin/entry.sh
 RUN rm -rf /etc/mysql/mariadb.conf.d/50-server.cnf
 ADD $PWD/srcs/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 EXPOSE 3306
-ENTRYPOINT [ "/usr/local/bin/entry.sh" ]
+RUN /usr/local/bin/entry.sh
+ENTRYPOINT [ "mysqld" ]

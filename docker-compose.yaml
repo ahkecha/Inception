@@ -5,12 +5,14 @@ services:
             build: ./srcs/mariadb
             container_name: mariadb
             volumes:
-                - ./data/mysql:/var/lib/mysql
+                - ./data/mysql:/database/mysql
             ports:
                 - "3306:3306"
             env_file:
-                - ".env"
+                - .env
             restart: always
+            networks:
+              - wordpress
         wordpress:
             image: wordpress:local
             build: ./srcs/wordpress
@@ -18,9 +20,11 @@ services:
             volumes:
                 - ./data/wordpress:/var/www/html
             env_file:
-                - ".env"
+                - .env
             depends_on:
                 - mariadb
+            networks:
+              - wordpress
         nginx:
             image: nginx:local
             build: ./srcs/nginx/
@@ -29,20 +33,12 @@ services:
                 - ./data/wordpress:/var/www/html
             ports:
                 - "443:443"
+                - "80:80"
             networks:
                 - wordpress
-
-# volumes:
-    # vWordpress:
-    #     driver_opts:
-    #         type: none
-    #         device: ./data/wordpress/
-    #         o: bind
-    # vMariadb:
-    #     driver_opts:
-    #         type: none
-    #         device: ./data/mariadb/
-
+            depends_on:
+                - mariadb
+                - wordpress
 networks:
     wordpress:
         driver: bridge

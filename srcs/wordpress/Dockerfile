@@ -10,4 +10,6 @@ ADD $PWD/srcs/entry.ash /usr/local/bin/
 RUN mkdir -p /var/www/html
 RUN chmod 777 /var/www/html
 RUN chmod +x /usr/local/bin/entry.ash
+RUN rm -rf /etc/php7/php-fpm.d/www.conf
+ADD $PWD/srcs/www.conf etc/php7/php-fpm.d/www.conf
 ENTRYPOINT ["entry.ash"]
