@@ -15,5 +15,5 @@ ADD $PWD/srcs/default.conf /etc/nginx/http.d/
 RUN chmod +x /usr/local/bin/entry.ash
 
 EXPOSE 443
-EXPOSE 80
+# EXPOSE 80
 ENTRYPOINT [ "/usr/local/bin/entry.ash" ]
