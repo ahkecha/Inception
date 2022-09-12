@@ -9,8 +9,8 @@ RUN  mkdir /etc/ssl/private/; openssl req -x509 -nodes -days 365 -newkey rsa:204
 	-out /etc/ssl/certs/nginx-selfsigned.crt
 
 RUN rm -rf /etc/nginx/http.d/*
-ADD $PWD/srcs/entry.ash /usr/local/bin
-ADD $PWD/srcs/default.conf /etc/nginx/http.d/
+ADD $PWD/tools/entry.ash /usr/local/bin
+ADD $PWD/conf/default.conf /etc/nginx/http.d/
 
 RUN chmod +x /usr/local/bin/entry.ash
 

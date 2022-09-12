@@ -2,27 +2,40 @@ version: '3'
 services:
         mariadb:
             image: mariadb:local
-            build: ./srcs/mariadb
+            build:
+              context: srcs/mariadb
+              args:
+                DB_NAME: ${DB_NAME}
+                DB_USER: ${DB_USER}
+                DB_PASSWD: ${DB_PASSWD}
+                DB_RPASSWD: ${DB_RPASSWD}
             container_name: mariadb
             volumes:
                 - ./data/mysql:/database/mysql
             ports:
                 - "3306:3306"
-            env_file:
-                - .env
+            # env_file:
+            #   - .env
             restart: always
             networks:
               - wordpress
         wordpress:
             image: wordpress:local
-            build: ./srcs/wordpress
+            build:
+              context: srcs/wordpress
+              args:
+                WP_ADMIN: ${WP_ADMIN}
+                WP_ADMINPASSWORD: ${WP_ADMINPASSWORD}
+                DB_NAME: ${DB_NAME}
+                DB_USER: ${DB_USER}
+                DB_PASSWD: ${DB_PASSWD}
             container_name: wp
             volumes:
-                - ./data/wordpress:/var/www/html
-            env_file:
-                - .env
+              - ./data/wordpress:/var/www/html
+            # env_file:
+            #   - .env
             depends_on:
-                - mariadb
+              - mariadb
             networks:
               - wordpress
         nginx:
@@ -41,3 +54,6 @@ services:
 networks:
     wordpress:
         driver: bridge
+
+volume:
+  

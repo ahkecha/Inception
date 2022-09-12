@@ -12,18 +12,18 @@ fi
 
 if [ -e "/var/www/html/wp-config.php" ]; then
 {
-	sed -i -e "s/database_name_here/wordpress/g" -e "s/username_here/user1/g" -e "s/password_here/user123/g" -e "s/localhost/mariadb/g" /var/www/html/wp-config.php
+	sed -i -e "s/database_name_here/${DB_NAME}/g" -e "s/username_here/${DB_USER}/g" -e "s/password_here/${DB_PASSWD}/g" -e "s/localhost/mariadb/g" /var/www/html/wp-config.php
 	echo "DB UPDATED"
 }
 else
 {
 	mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-	sed -i -e "s/database_name_here/wordpress/g" -e "s/username_here/user1/g" -e "s/password_here/user123/g" -e "s/localhost/mariadb/g" /var/www/html/wp-config.php
+	sed -i -e "s/database_name_here/${DB_NAME}/g" -e "s/username_here/${DB_USER}/g" -e "s/password_here/${DB_PASSWD}/g" -e "s/localhost/mariadb/g" /var/www/html/wp-config.php
 }
 fi
 
 /usr/local/bin/wp core install --allow-root --path=/var/www/html --url=ahkecha.42.fr \
-	--admin_user=admin --admin_password=admin --admin_email=admin@admin.com --title="Wordpress Website test"
+	--admin_user=${WP_ADMIN} --admin_password=${WP_ADMINPASSWORD} --admin_email=admin@admin.com --title="Wordpress Website test"
 
 echo "Running php-fpm"
 php-fpm7 -F -R
