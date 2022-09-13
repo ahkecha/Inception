@@ -29,11 +29,15 @@ services:
                 DB_NAME: ${DB_NAME}
                 DB_USER: ${DB_USER}
                 DB_PASSWD: ${DB_PASSWD}
+                WP_ADMINMAIL: ${WP_ADMINMAIL}
+                EDITOR_USER: ${EDITOR_USR}
+                EDITOR_PASSWD: ${EDITOR_PASSWD}
+                EDITOR_MAIL: ${EDITOR_MAIL}
             container_name: wp
             volumes:
               - ./data/wordpress:/var/www/html
-            # env_file:
-            #   - .env
+            env_file:
+              - .env
             depends_on:
               - mariadb
             networks:
@@ -54,6 +58,3 @@ services:
 networks:
     wordpress:
         driver: bridge
-
-volume:
-  
