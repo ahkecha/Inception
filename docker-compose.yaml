@@ -48,6 +48,7 @@ services:
             container_name: nginx
             volumes:
                 - ./data/wordpress:/var/www/html
+                - ./data/nginx:/var/logs/nginx
             ports:
                 - "443:443"
             networks:

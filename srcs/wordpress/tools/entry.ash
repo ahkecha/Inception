@@ -1,8 +1,11 @@
 #!/bin/ash
 
+echo "[☆] Checking wordpress installation... "
+
 if [ -e "/usr/local/bin/wp" ]; then
 	echo "[☆] WPCLI ready"
 else {
+	echo "[☆] Installing wordpress..."
 	curl -LO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /dev/null 2>&1
 	mv wp-cli.phar /usr/local/bin/wp > /dev/null 2>&1
 	chmod +x /usr/local/bin/wp

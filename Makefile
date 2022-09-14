@@ -1,4 +1,3 @@
-
 mandatory:
 	docker-compose up
 
