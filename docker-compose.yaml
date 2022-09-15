@@ -54,8 +54,8 @@ services:
             networks:
                 - wordpress
             depends_on:
-                - mariadb
                 - wordpress
+                - mariadb
         vsftpd:
           image: vsftpd:local
           build:
@@ -74,7 +74,16 @@ services:
             - wordpress
           env_file:
             - .env
-
+        redis:
+          image: redis:local
+          build: ./srcs/bonus/redis
+          container_name: redis
+          ports:
+            - "6379:6379"
+          depends_on:
+            - wordpress
+          networks:
+            - wordpress
 networks:
     wordpress:
         driver: bridge

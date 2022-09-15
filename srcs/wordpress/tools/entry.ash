@@ -28,7 +28,17 @@ fi
 
 /usr/local/bin/wp core install --allow-root --path=/var/www/html --url=ahkecha.42.fr \
 	--admin_user=${WP_ADMIN} --admin_password=${WP_ADMINPASSWORD} --admin_email=admin@admin.com --title="Inception" > /dev/null 2>&1
+
+if ! grep -q randominception /var/www/html/wp-config.php ; then
+	python3 /usr/local/bin/redis.py
+fi
+
+if ! wp plugin is-installed redis-cache --allow-root --path=/var/www/html; then
+	/usr/local/bin/wp plugin install redis-cache --activate --path=/var/www/html --allow-root
+fi
+
 /usr/local/bin/wp user create --allow-root --path=/var/www/html/ ${EDITOR_USR} ${EDITOR_MAIL} --role=editor --user_pass="${EDITOR_PASSWD}" --display_name='editor_user' --nickname='ed1t0r' > /dev/null 2>&1
+
 echo "[☆] Users Created"
 echo "[☆] Running php-fpm"
 php-fpm7 -F -R
