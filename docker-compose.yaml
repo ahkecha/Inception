@@ -56,6 +56,25 @@ services:
             depends_on:
                 - mariadb
                 - wordpress
+        vsftpd:
+          image: vsftpd:local
+          build:
+            context: srcs/bonus/VsFTPd
+            args:
+              FTP_USR: ${FTP_USR}
+              FTP_PASSWD: ${FTP_PASSWD}
+          container_name: vsftpd
+          volumes:
+            - ./data/wordpress:/www/wordpress/
+          ports:
+            - "20:20"
+            - "21:21"
+            - "10090-10100:10090-10100"
+          depends_on:
+            - wordpress
+          env_file:
+            - .env
+
 networks:
     wordpress:
         driver: bridge
