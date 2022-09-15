@@ -58,11 +58,7 @@ services:
                 - mariadb
         vsftpd:
           image: vsftpd:local
-          build:
-            context: srcs/bonus/VsFTPd
-            args:
-              FTP_USR: ${FTP_USR}
-              FTP_PASSWD: ${FTP_PASSWD}
+          build: srcs/bonus/VsFTPd
           container_name: vsftpd
           volumes:
             - ./data/wordpress:/www/wordpress/
@@ -74,6 +70,8 @@ services:
             - wordpress
           env_file:
             - .env
+          networks:
+            - wordpress
         redis:
           image: redis:local
           build: ./srcs/bonus/redis
