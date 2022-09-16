@@ -14,8 +14,6 @@ services:
                 - ./data/mysql:/database/mysql
             ports:
                 - "3306:3306"
-            # env_file:
-            #   - .env
             restart: always
             networks:
               - wordpress
@@ -40,6 +38,7 @@ services:
               - .env
             depends_on:
               - mariadb
+            restart: always
             networks:
               - wordpress
         nginx:
@@ -49,13 +48,16 @@ services:
             volumes:
                 - ./data/wordpress:/var/www/html
                 - ./data/nginx:/var/logs/nginx
+                - ./data/adminer:/var/www/data
             ports:
                 - "443:443"
             networks:
                 - wordpress
+            restart: always
             depends_on:
                 - wordpress
                 - mariadb
+                - adminer
         vsftpd:
           image: vsftpd:local
           build: srcs/bonus/VsFTPd
@@ -80,8 +82,29 @@ services:
             - "6379:6379"
           depends_on:
             - wordpress
+          restart: always
           networks:
             - wordpress
+        adminer:
+          image: adminer:local
+          build: ./srcs/bonus/adminer
+          container_name: adminer
+          depends_on:
+            - mariadb
+          restart: always
+          networks:
+            - wordpress
+          ports:
+            - "1337:1337"
+        splunk:
+          image: splunk:local
+          build: ./srcs/bonus/splunk
+          env_file:
+            - .env
+          container_name: splunk
+          restart: always
+          ports:
+            - "8000:8000"
 networks:
     wordpress:
         driver: bridge

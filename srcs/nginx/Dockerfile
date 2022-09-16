@@ -16,5 +16,4 @@ RUN mkdir -p /run/nginx
 RUN chmod +x /usr/local/bin/entry.ash
 
 EXPOSE 443
-# EXPOSE 80
 ENTRYPOINT [ "/usr/local/bin/entry.ash" ]

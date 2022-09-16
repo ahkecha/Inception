@@ -4,4 +4,5 @@ if ! grep -q inceftp "/etc/passwd"; then
 	echo "$FTP_USR:$FTP_PASSWD" | /usr/sbin/chpasswd > /dev/null 2>&1
 	echo "[☆] Created FTP USER"
 fi
+echo "[☆] Running FTP server"
 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
