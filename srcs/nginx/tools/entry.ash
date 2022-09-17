@@ -11,9 +11,6 @@ then
 	echo "KEY OK"
 fi
 
-# chown nginx:nginx -R /var/www/html
-
-# cat /etc/nginx/http.d/default.conf
 sed -i 's/user nginx/user root/g' /etc/nginx/nginx.conf
 nginx -g 'daemon off;'
 nginx -s reload

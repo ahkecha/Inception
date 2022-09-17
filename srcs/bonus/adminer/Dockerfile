@@ -10,5 +10,6 @@ ADD $PWD/conf/adminer.php /usr/share/
 RUN mkdir -p /var/www/adminer
 ADD $PWD/tools/entry.ash /usr/share/
 RUN chmod +x /usr/share/entry.ash
-EXPOSE 1337
+RUN rm -rf /etc/php7/php-fpm.d/www.conf
+ADD $PWD/conf/www.conf etc/php7/php-fpm.d/www.conf
 ENTRYPOINT [ "/usr/share/entry.ash" ]

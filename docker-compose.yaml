@@ -89,22 +89,22 @@ services:
           image: adminer:local
           build: ./srcs/bonus/adminer
           container_name: adminer
+          volumes:
+            - ./data/adminer:/var/www/adminer
           depends_on:
             - mariadb
           restart: always
           networks:
             - wordpress
-          ports:
-            - "1337:1337"
-        splunk:
-          image: splunk:local
-          build: ./srcs/bonus/splunk
-          env_file:
-            - .env
-          container_name: splunk
-          restart: always
-          ports:
-            - "8000:8000"
+        # splunk:
+        #   image: splunk:local
+        #   build: ./srcs/bonus/splunk
+        #   env_file:
+        #     - .env
+        #   container_name: splunk
+        #   restart: always
+        #   ports:
+        #     - "8000:8000"
 networks:
     wordpress:
         driver: bridge

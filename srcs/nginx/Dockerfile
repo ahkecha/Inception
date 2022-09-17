@@ -12,6 +12,7 @@ RUN rm -rf /etc/nginx/http.d/*
 RUN mkdir -p /var/logs/nginx
 ADD $PWD/tools/entry.ash /usr/local/bin
 ADD $PWD/conf/default.conf /etc/nginx/http.d/
+ADD $PWD/conf/adminer.conf /etc/nginx/http.d/
 RUN mkdir -p /run/nginx
 RUN chmod +x /usr/local/bin/entry.ash
 
