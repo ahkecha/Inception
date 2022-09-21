@@ -9,8 +9,6 @@ UPDATE mysql.user SET Password = PASSWORD('${DB_RPASSWD}') WHERE User = 'root';
 UPDATE mysql.user SET plugin = '' WHERE user = 'root';
 FLUSH PRIVILEGES;
 EOF
-service mysql start
+/etc/init.d/mysql start
 mysql_install_db --basedir=/usr --datadir=/database/mysql
 mysql -u root < /usr/share/init.sql
-
-

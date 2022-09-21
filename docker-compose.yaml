@@ -19,9 +19,11 @@ services:
               - wordpress
         wordpress:
             image: wordpress:local
-            build:
-              context: srcs/wordpress
-              args:
+            build: srcs/wordpress
+            container_name: wp
+            volumes:
+              - ./data/wordpress:/var/www/html
+            environment:
                 WP_ADMIN: ${WP_ADMIN}
                 WP_ADMINPASSWORD: ${WP_ADMINPASSWORD}
                 DB_NAME: ${DB_NAME}
@@ -31,11 +33,6 @@ services:
                 EDITOR_USER: ${EDITOR_USR}
                 EDITOR_PASSWD: ${EDITOR_PASSWD}
                 EDITOR_MAIL: ${EDITOR_MAIL}
-            container_name: wp
-            volumes:
-              - ./data/wordpress:/var/www/html
-            env_file:
-              - .env
             depends_on:
               - mariadb
             restart: always
@@ -49,6 +46,7 @@ services:
                 - ./data/wordpress:/var/www/html
                 - ./data/nginx:/var/logs/nginx
                 - ./data/adminer:/var/www/data
+                - ./data/hugo:/var/www/hugo
             ports:
                 - "443:443"
             networks:
@@ -58,6 +56,7 @@ services:
                 - wordpress
                 - mariadb
                 - adminer
+                - hugo
         vsftpd:
           image: vsftpd:local
           build: srcs/bonus/VsFTPd
@@ -67,7 +66,6 @@ services:
           ports:
             - "20:20"
             - "21:21"
-            - "10090-10100:10090-10100"
           depends_on:
             - wordpress
           env_file:
@@ -93,6 +91,15 @@ services:
             - ./data/adminer:/var/www/adminer
           depends_on:
             - mariadb
+          restart: always
+          networks:
+            - wordpress
+        hugo:
+          image: hugo:local
+          build: ./srcs/bonus/hugo
+          container_name: hugo
+          volumes:
+            - ./data/hugo:/static
           restart: always
           networks:
             - wordpress

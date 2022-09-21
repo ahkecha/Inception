@@ -5,5 +5,5 @@ if ! grep -q PASSWORD /opt/splunk/etc/system/local/user-seed.conf ; then
 fi
 
 /opt/splunk/bin/splunk start --accept-license --no-prompt > /dev/null 2>&1
-echo "[☆] Splunk Started at port 8000"
+echo "ℹ️  Splunk Started at port 8000"
 tail -f /dev/null

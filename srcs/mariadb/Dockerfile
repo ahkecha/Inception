@@ -9,6 +9,7 @@ RUN apt update && \
 RUN rm -rf /var/lib/{apt,dpkg,cache,log}/
 RUN /etc/init.d/mysql start
 ADD $PWD/tools/entry.sh /usr/local/bin/entry.sh
+RUN chmod +x /usr/local/bin/entry.sh
 RUN rm -rf /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN mkdir -p /database/mysql
 ADD $PWD/conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf

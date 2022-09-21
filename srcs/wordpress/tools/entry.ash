@@ -1,28 +1,25 @@
 #!/bin/ash
 
-echo "[☆] Checking wordpress installation... "
+echo "ℹ️  Checking wordpress installation... "
 
 if [ -e "/usr/local/bin/wp" ]; then
-	echo "[☆] WPCLI ready"
+	echo "ℹ️  WPCLI ready"
+	/usr/local/bin/wp core download --allow-root --path=/var/www/html > /dev/null 2>&1
 else {
-	echo "[☆] Installing wordpress..."
+	echo "ℹ️  Installing wordpress..."
 	curl -LO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /dev/null 2>&1
 	mv wp-cli.phar /usr/local/bin/wp > /dev/null 2>&1
 	chmod +x /usr/local/bin/wp
+	echo "ℹ️  WPcli Installed"
 	/usr/local/bin/wp core download --allow-root --path=/var/www/html > /dev/null 2>&1
-	echo "[☆] WPcli Installed"
 }
 fi
 
-if [ -e "/var/www/html/wp-config.php" ]; then
-{
-	echo "[☆] wp-config ready"
-}
-else
+if [ ! -e "/var/www/html/wp-config.php" ]; then
 {
 	mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 	sed -i -e "s/database_name_here/${DB_NAME}/g" -e "s/username_here/${DB_USER}/g" -e "s/password_here/${DB_PASSWD}/g" -e "s/localhost/mariadb/g" /var/www/html/wp-config.php
-	echo "[☆] DB UPDATED"
+	echo "ℹ️  DB UPDATED"
 }
 fi
 
@@ -34,11 +31,13 @@ if ! grep -q randominception /var/www/html/wp-config.php ; then
 fi
 
 if ! wp plugin is-installed redis-cache --allow-root --path=/var/www/html; then
-	/usr/local/bin/wp plugin install redis-cache --activate --path=/var/www/html --allow-root
+	/usr/local/bin/wp plugin install redis-cache --activate --path=/var/www/html --allow-root > /dev/null 2>&1
+	echo "✅ Installed redis-cache"
 fi
 
-/usr/local/bin/wp user create --allow-root --path=/var/www/html/ ${EDITOR_USR} ${EDITOR_MAIL} --role=editor --user_pass="${EDITOR_PASSWD}" --display_name='editor_user' --nickname='ed1t0r' > /dev/null 2>&1
-
-echo "[☆] Users Created"
-echo "[☆] Running php-fpm"
+if ! /usr/local/bin/wp user list --allow-root --path=/var/www/html/ | awk 'NR==3{print $3}' > /dev/null; then
+	/usr/local/bin/wp user create --allow-root --path=/var/www/html/ ${EDITOR_USR} ${EDITOR_MAIL} --role=editor --user_pass="${EDITOR_PASSWD}" --display_name='editor_user' --nickname='ed1t0r' > /dev/null 2>&1
+	echo "✅ Users Created"
+fi
+echo "ℹ️  Running php-fpm"
 php-fpm7 -F -R

@@ -7,5 +7,5 @@ else
 	cp /usr/share/adminer.php /var/www/adminer/index.php
 fi
 
-# echo "[☆] Running Adminer at port 1337"
+# echo "ℹ️  Running Adminer at port 1337"
 php-fpm7 -F -R

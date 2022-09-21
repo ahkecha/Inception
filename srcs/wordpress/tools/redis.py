@@ -6,6 +6,6 @@ buf.insert(buf.index('define( \'DB_COLLATE\', \'\' );\n') + 3, 'define(\'WP_CACH
 outfile = open("/var/www/html/wp-config.php", "w+")
 for l in buf:
 	outfile.write(l)
-print("[☆] Added redis config to wp-config.php")
+print("ℹ️  Added redis config to wp-config.php")
 
 

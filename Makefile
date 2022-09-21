@@ -13,3 +13,11 @@ clean:
 
 fclean:
 	docker image prune -a -f
+
+superclean:
+	docker stop $$(docker ps -qa); docker rm $$(docker ps -qa);
+	docker rmi -f $$(docker images -qa);
+	docker network rm $$(docker network ls -q) 2>/dev/null"
+	rm -rf ./data/wordpress/*
+	rm -rf ./data/hugo/*
+	rm -rf ./data/nginx/*
