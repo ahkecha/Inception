@@ -68,8 +68,9 @@ services:
             - "21:21"
           depends_on:
             - wordpress
-          env_file:
-            - .env
+          environment:
+              FTP_USR: ${EDITOR_USR}
+              FTP_PASSWD: ${EDITOR_PASSWD}
           networks:
             - wordpress
         redis:
@@ -103,15 +104,6 @@ services:
           restart: always
           networks:
             - wordpress
-        # splunk:
-        #   image: splunk:local
-        #   build: ./srcs/bonus/splunk
-        #   env_file:
-        #     - .env
-        #   container_name: splunk
-        #   restart: always
-        #   ports:
-        #     - "8000:8000"
 networks:
     wordpress:
         driver: bridge
