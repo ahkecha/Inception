@@ -1,11 +1,11 @@
 #!/bin/ash
 
-FILE=/var/www/adminer/adminer.php
+FILE=/var/www/adminer/index.php
 if [ -f "$FILE" ]; then
 	echo ""
 else
-	cp /usr/share/adminer.php /var/www/adminer/index.php
+	curl -LO https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php > /dev/null 2>&1
+	mv adminer-4.8.1.php /var/www/adminer/index.php
 fi
 
-# echo "ℹ️  Running Adminer at port 1337"
 php-fpm7 -F -R
