@@ -1,4 +1,13 @@
 version: '3'
+
+volumes:
+    mariadb_vol:
+        driver: local
+        driver_opts:
+          type: none
+          o: bind
+          device: "/tmp/mariadb"
+
 services:
         mariadb:
             image: mariadb:local
@@ -11,7 +20,7 @@ services:
                 DB_RPASSWD: ${DB_RPASSWD}
             container_name: mariadb
             volumes:
-                - ./data/mysql:/database/mysql
+                - mariadb_vol:/database/mysql
             ports:
                 - "3306:3306"
             restart: always
@@ -101,6 +110,13 @@ services:
           container_name: hugo
           volumes:
             - ./data/hugo:/static
+          restart: always
+          networks:
+            - wordpress
+        snort:
+          image: snort:local
+          build: ./srcs/bonus/snort
+          container_name: snort
           restart: always
           networks:
             - wordpress

@@ -26,7 +26,7 @@ paginate = 5
   # ...
   # Note: result of the tree command
   userName = "ahk3ch4"
-  pcName = "kracken"
+  pcName = "e6r6p6"
   workDir = "whoami"
   profile = "greet.txt"
 
@@ -54,7 +54,6 @@ paginate = 5
   description = """
   Hi I am Amine!
   Nice to meet you!
-
   """
 
   # Note: If you want to use a Markdown file, you can use the following

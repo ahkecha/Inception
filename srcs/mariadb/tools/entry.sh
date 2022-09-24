@@ -12,3 +12,4 @@ EOF
 /etc/init.d/mysql start
 mysql_install_db --basedir=/usr --datadir=/database/mysql
 mysql -u root < /usr/share/init.sql
+
