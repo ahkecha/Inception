@@ -1,4 +1,6 @@
 #!/bin/ash
+
+echo $FTP_USR
 if ! grep -q $FTP_USR "/etc/passwd"; then
 	adduser -h /home/$FTP_USR -s /bin/false -D $FTP_USR
 	echo "$FTP_USR:$FTP_PASSWD" | /usr/sbin/chpasswd > /dev/null 2>&1

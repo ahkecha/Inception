@@ -25,7 +25,7 @@ services:
                 - "3306:3306"
             restart: always
             networks:
-              - wordpress
+              - inception
         wordpress:
             image: wordpress:local
             build: srcs/wordpress
@@ -46,7 +46,7 @@ services:
               - mariadb
             restart: always
             networks:
-              - wordpress
+              - inception
         nginx:
             image: nginx:local
             build: ./srcs/nginx/
@@ -59,7 +59,7 @@ services:
             ports:
                 - "443:443"
             networks:
-                - wordpress
+                - inception
             restart: always
             depends_on:
                 - wordpress
@@ -75,13 +75,14 @@ services:
           ports:
             - "20:20"
             - "21:21"
+            - "10090-10100:10090-10100"
           depends_on:
             - wordpress
           environment:
-              FTP_USR: ${EDITOR_USR}
-              FTP_PASSWD: ${EDITOR_PASSWD}
+              FTP_USR: ${FTP_USR}
+              FTP_PASSWD: ${FTP_PASSWD}
           networks:
-            - wordpress
+            - inception
         redis:
           image: redis:local
           build: ./srcs/bonus/redis
@@ -92,7 +93,7 @@ services:
             - wordpress
           restart: always
           networks:
-            - wordpress
+            - inception
         adminer:
           image: adminer:local
           build: ./srcs/bonus/adminer
@@ -103,7 +104,7 @@ services:
             - mariadb
           restart: always
           networks:
-            - wordpress
+            - inception
         hugo:
           image: hugo:local
           build: ./srcs/bonus/hugo
@@ -112,14 +113,14 @@ services:
             - ./data/hugo:/static
           restart: always
           networks:
-            - wordpress
+            - inception
         snort:
           image: snort:local
           build: ./srcs/bonus/snort
           container_name: snort
           restart: always
           networks:
-            - wordpress
+            - inception
 networks:
-    wordpress:
+    inception:
         driver: bridge
