@@ -1,10 +1,10 @@
 all:
-	docker-compose up --build
+	docker-compose -f srcs/docker-compose.yaml up --build
 
 re: clean all
 
 down:
-	docker-compose down
+	docker-compose -f srcs/docker-compose.yaml down -f srcs/docker-compose.yaml
 
 clean:
 	docker rm $$(docker ps -qa)
@@ -14,8 +14,9 @@ fclean: clean
 
 superclean:
 	docker stop $$(docker ps -qa); docker rm $$(docker ps -qa);
-	docker rmi -f $$(docker images -qa);
-	rm -rf ./data/wordpress/*
-	rm -rf ./data/hugo/*
-	rm -rf ./data/nginx/*
-	rm -rf /tmp/mariadb
+	rm -rf ./srcs/data/wordpress/*
+	rm -rf ./srcs/data/hugo/*
+	rm -rf ./srcs/data/nginx/*
+	rm -rf /tmp/mariadb/*
+	rm -rf /tmp/wordpress/*
+

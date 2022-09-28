@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -d "./data/.success" ]; then
+if [ ! -f "./srcs/data/.success" ]; then
 	mkdir ./data
 	if [ ! -d "/tmp/mariadb" ]; then
 		mkdir -m 777 /tmp/mariadb
@@ -8,8 +8,8 @@ if [ ! -d "./data/.success" ]; then
 	if [ ! -d "/tmp/wordpress" ]; then
 		mkdir -m 777 /tmp/wordpress
 	fi
-	cd ./data
-	ln -s /tmp/mariadb ./mariadb > /dev/null 2>&1
-	ln -s /tmp/wordpress ./wordpress > /dev/null 2>&1
+	cd ./srcs/data
+	ln -s /tmp/mariadb ./srcs/data/mariadb > /dev/null 2>&1
+	ln -s /tmp/wordpress ./srcs/data/wordpress > /dev/null 2>&1
 	echo '1' > ./.success
 fi

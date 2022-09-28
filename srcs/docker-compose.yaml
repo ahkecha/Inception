@@ -19,7 +19,7 @@ services:
         mariadb:
             image: mariadb:local
             build:
-              context: srcs/mariadb
+              context: requirements/mariadb
               args:
                 DB_NAME: ${DB_NAME}
                 DB_USER: ${DB_USER}
@@ -35,7 +35,7 @@ services:
               - inception
         wordpress:
             image: wordpress:local
-            build: srcs/wordpress
+            build: requirements/wordpress
             container_name: wp
             volumes:
               - wordpress_vol:/var/www/html
@@ -56,7 +56,7 @@ services:
               - inception
         nginx:
             image: nginx:local
-            build: ./srcs/nginx/
+            build: ./requirements/nginx/
             container_name: nginx
             volumes:
                 - wordpress_vol:/var/www/html
@@ -75,7 +75,7 @@ services:
                 - hugo
         vsftpd:
           image: vsftpd:local
-          build: srcs/bonus/VsFTPd
+          build: requirements/bonus/VsFTPd
           container_name: vsftpd
           volumes:
             - wordpress_vol:/www/wordpress/
@@ -92,7 +92,7 @@ services:
             - inception
         redis:
           image: redis:local
-          build: ./srcs/bonus/redis
+          build: ./requirements/bonus/redis
           container_name: redis
           ports:
             - "6379:6379"
@@ -103,7 +103,7 @@ services:
             - inception
         adminer:
           image: adminer:local
-          build: ./srcs/bonus/adminer
+          build: ./requirements/bonus/adminer
           container_name: adminer
           volumes:
             - ./data/adminer:/var/www/adminer
@@ -114,7 +114,7 @@ services:
             - inception
         hugo:
           image: hugo:local
-          build: ./srcs/bonus/hugo
+          build: ./requirements/bonus/hugo
           container_name: hugo
           volumes:
             - ./data/hugo:/static
@@ -123,7 +123,7 @@ services:
             - inception
         snort:
           image: snort:local
-          build: ./srcs/bonus/snort
+          build: ./requirements/bonus/snort
           container_name: snort
           restart: always
           networks:
