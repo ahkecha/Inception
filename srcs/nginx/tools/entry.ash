@@ -1,11 +1,11 @@
 #!/bin/ash
 
-export CRT="${CRT:=nginx-selfsigned.crt}";
+export CRT="nginx-selfsigned.crt";
 if [ -f "/etc/ssl/certs/$CRT" ]
 then
 	echo "✅ CERT OK"
 fi
-export KEY="${KEY:=nginx-selfsigned.key}";
+export KEY="nginx-selfsigned.key";
 if [ -f "/etc/ssl/private/$KEY" ]
 then
 	echo "✅ KEY OK"

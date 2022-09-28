@@ -1,11 +1,15 @@
 #!/bin/bash
 
-if [ ! -d "./data" ]; then
-	mkdir -p ./data/wordpress/
-	chmod -R 777 ./data/wordpress
+if [ ! -d "./data/.success" ]; then
+	mkdir ./data
 	if [ ! -d "/tmp/mariadb" ]; then
 		mkdir -m 777 /tmp/mariadb
 	fi
+	if [ ! -d "/tmp/wordpress" ]; then
+		mkdir -m 777 /tmp/wordpress
+	fi
 	cd ./data
 	ln -s /tmp/mariadb ./mariadb > /dev/null 2>&1
+	ln -s /tmp/wordpress ./wordpress > /dev/null 2>&1
+	echo '1' > ./.success
 fi

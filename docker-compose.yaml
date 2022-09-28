@@ -7,6 +7,13 @@ volumes:
           type: none
           o: bind
           device: "/tmp/mariadb"
+    wordpress_vol:
+        driver: local
+        driver_opts:
+          type: none
+          o: bind
+          device: "/tmp/wordpress"
+
 
 services:
         mariadb:
@@ -31,7 +38,7 @@ services:
             build: srcs/wordpress
             container_name: wp
             volumes:
-              - ./data/wordpress:/var/www/html
+              - wordpress_vol:/var/www/html
             environment:
                 WP_ADMIN: ${WP_ADMIN}
                 WP_ADMINPASSWORD: ${WP_ADMINPASSWORD}
@@ -52,7 +59,7 @@ services:
             build: ./srcs/nginx/
             container_name: nginx
             volumes:
-                - ./data/wordpress:/var/www/html
+                - wordpress_vol:/var/www/html
                 - ./data/nginx:/var/logs/nginx
                 - ./data/adminer:/var/www/data
                 - ./data/hugo:/var/www/hugo
@@ -71,7 +78,7 @@ services:
           build: srcs/bonus/VsFTPd
           container_name: vsftpd
           volumes:
-            - ./data/wordpress:/www/wordpress/
+            - wordpress_vol:/www/wordpress/
           ports:
             - "20:20"
             - "21:21"
