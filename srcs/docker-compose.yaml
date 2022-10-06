@@ -2,18 +2,7 @@ version: '3'
 
 volumes:
     mariadb_vol:
-        driver: local
-        driver_opts:
-          type: none
-          o: bind
-          device: "/tmp/mariadb"
     wordpress_vol:
-        driver: local
-        driver_opts:
-          type: none
-          o: bind
-          device: "/tmp/wordpress"
-
 
 services:
         mariadb:
@@ -28,8 +17,6 @@ services:
             container_name: mariadb
             volumes:
                 - mariadb_vol:/database/mysql
-            ports:
-                - "3306:3306"
             restart: always
             networks:
               - inception
@@ -94,8 +81,6 @@ services:
           image: redis:local
           build: ./requirements/bonus/redis
           container_name: redis
-          ports:
-            - "6379:6379"
           depends_on:
             - wordpress
           restart: always

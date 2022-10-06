@@ -1,7 +1,7 @@
 #!/bin/bash
 
+# echo "Setting up volumes directories and appropriate permissions for ftp"
 if [ ! -f "./srcs/data/.success" ]; then
-	mkdir ./data
 	if [ ! -d "/tmp/mariadb" ]; then
 		mkdir -m 777 /tmp/mariadb
 	fi
