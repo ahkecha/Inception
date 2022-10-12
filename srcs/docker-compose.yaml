@@ -1,8 +1,8 @@
 version: '3'
 
-volumes:
-    mariadb_vol:
-    wordpress_vol:
+# volumes:
+#     mariadb_vol:
+#     wordpress_vol:
 
 services:
         mariadb:
@@ -16,7 +16,7 @@ services:
                 DB_RPASSWD: ${DB_RPASSWD}
             container_name: mariadb
             volumes:
-                - mariadb_vol:/database/mysql
+                - /home/ahkecha/data/mariadb:/database/mysql
             restart: always
             networks:
               - inception
@@ -25,7 +25,7 @@ services:
             build: requirements/wordpress
             container_name: wp
             volumes:
-              - wordpress_vol:/var/www/html
+              - /home/ahkecha/data/wordpress:/var/www/html
             environment:
                 WP_ADMIN: ${WP_ADMIN}
                 WP_ADMINPASSWORD: ${WP_ADMINPASSWORD}
@@ -46,10 +46,10 @@ services:
             build: ./requirements/nginx/
             container_name: nginx
             volumes:
-                - wordpress_vol:/var/www/html
-                - ./data/nginx:/var/logs/nginx
-                - ./data/adminer:/var/www/data
-                - ./data/hugo:/var/www/hugo
+                - /home/ahkecha/data/wordpress:/var/www/html
+                - /home/ahkecha/data/nginx:/var/logs/nginx
+                - /home/ahkecha/data/adminer:/var/www/data
+                - /home/ahkecha/data/hugo:/var/www/hugo
             ports:
                 - "443:443"
             networks:
@@ -65,7 +65,7 @@ services:
           build: requirements/bonus/VsFTPd
           container_name: vsftpd
           volumes:
-            - wordpress_vol:/www/wordpress/
+            - /home/ahkecha/data/wordpress:/www/wordpress/
           ports:
             - "20:20"
             - "21:21"
@@ -91,7 +91,7 @@ services:
           build: ./requirements/bonus/adminer
           container_name: adminer
           volumes:
-            - ./data/adminer:/var/www/adminer
+            - /home/ahkecha/data/adminer:/var/www/adminer
           depends_on:
             - mariadb
           restart: always
@@ -102,15 +102,23 @@ services:
           build: ./requirements/bonus/hugo
           container_name: hugo
           volumes:
-            - ./data/hugo:/static
+            - /home/ahkecha/data/hugo:/static
           restart: always
           networks:
             - inception
-        snort:
-          image: snort:local
-          build: ./requirements/bonus/snort
-          container_name: snort
+        cadvisor:
+          image: cadvisor:local
+          build: ./requirements/bonus/cadvisor
+          container_name: cadvisor
           restart: always
+          privileged: true
+          devices:
+            - /dev/kmsg
+          volumes:
+            - /:/rootfs:ro
+            - /var/run:/var/run:rw
+            - /sys:/sys:ro
+            - /var/lib/docker/:/var/lib/docker:ro
           networks:
             - inception
 networks:

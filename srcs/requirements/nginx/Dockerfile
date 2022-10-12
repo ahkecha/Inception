@@ -14,6 +14,7 @@ ADD $PWD/tools/entry.ash /usr/local/bin
 ADD $PWD/conf/default.conf /etc/nginx/http.d/
 ADD $PWD/conf/adminer.conf /etc/nginx/http.d/
 ADD $PWD/conf/static.conf /etc/nginx/http.d/
+ADD $PWD/conf/cadvisor.conf /etc/nginx/http.d/
 RUN mkdir -p /run/nginx
 RUN chmod +x /usr/local/bin/entry.ash
 EXPOSE 443
