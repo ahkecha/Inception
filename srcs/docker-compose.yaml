@@ -1,8 +1,12 @@
 version: '3'
 
-# volumes:
-#     mariadb_vol:
-#     wordpress_vol:
+volumes:
+    mariadb_vol:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: 'bind'
+        device: '/home/ahkecha/data/mariadb'
 
 services:
         mariadb:
@@ -16,7 +20,7 @@ services:
                 DB_RPASSWD: ${DB_RPASSWD}
             container_name: mariadb
             volumes:
-                - /home/ahkecha/data/mariadb:/database/mysql
+                - mariadb_vol:/database/mysql
             restart: always
             networks:
               - inception
@@ -113,14 +117,17 @@ services:
           restart: always
           privileged: true
           devices:
-            - /dev/kmsg
+            - /dev/kmsg:/dev/kmsg
           volumes:
             - /:/rootfs:ro
             - /var/run:/var/run:rw
             - /sys:/sys:ro
             - /var/lib/docker/:/var/lib/docker:ro
+            - /cgroup:/cgroup:ro
           networks:
             - inception
+          ports:
+            - "9999:2000"
 networks:
     inception:
         driver: bridge

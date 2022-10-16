@@ -5,8 +5,8 @@ RUN apt update && \
 
 RUN curl -LO https://github.com/google/cadvisor/releases/download/v0.37.5/cadvisor
 RUN chmod +x cadvisor
-
-EXPOSE 2000
-ENTRYPOINT [ "./cadvisor", "--port=2000" ]
+ADD $PWD/tools/entry.sh	/usr/local/bin/entry.sh
+RUN chmod +x /usr/local/bin/entry.sh
+ENTRYPOINT [ "/usr/local/bin/entry.sh" ]
 
 
