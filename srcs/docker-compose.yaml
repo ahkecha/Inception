@@ -7,6 +7,12 @@ volumes:
         type: 'none'
         o: 'bind'
         device: '/home/ahkecha/data/mariadb'
+    wp_vol:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: 'bind'
+        device: '/home/ahkecha/data/wordpress'
 
 services:
         mariadb:
@@ -29,7 +35,7 @@ services:
             build: requirements/wordpress
             container_name: wp
             volumes:
-              - /home/ahkecha/data/wordpress:/var/www/html
+              - wp_vol:/var/www/html
             environment:
                 WP_ADMIN: ${WP_ADMIN}
                 WP_ADMINPASSWORD: ${WP_ADMINPASSWORD}
@@ -50,7 +56,7 @@ services:
             build: ./requirements/nginx/
             container_name: nginx
             volumes:
-                - /home/ahkecha/data/wordpress:/var/www/html
+                - wp_vol:/var/www/html
                 - /home/ahkecha/data/nginx:/var/logs/nginx
                 - /home/ahkecha/data/adminer:/var/www/data
                 - /home/ahkecha/data/hugo:/var/www/hugo
@@ -69,7 +75,7 @@ services:
           build: requirements/bonus/VsFTPd
           container_name: vsftpd
           volumes:
-            - /home/ahkecha/data/wordpress:/www/wordpress/
+            - wp_vol:/www/wordpress/
           ports:
             - "20:20"
             - "21:21"
