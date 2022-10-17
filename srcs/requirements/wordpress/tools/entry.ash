@@ -32,12 +32,18 @@ fi
 
 if ! wp plugin is-installed redis-cache --allow-root --path=/var/www/html; then
 	/usr/local/bin/wp plugin install redis-cache --activate --path=/var/www/html --allow-root > /dev/null 2>&1
+	/usr/local/bin/wp redis enable --path=/var/www/html --allow-root > /dev/null 2>&1
 	echo "✅ Installed redis-cache"
 fi
 
-if ! /usr/local/bin/wp user list --allow-root --path=/var/www/html/ | awk 'NR==3{print $3}' > /dev/null; then
+if ! /usr/local/bin/wp user list --allow-root --path=/var/www/html/ | grep -q ${EDITOR_USR} > /dev/null; then
 	/usr/local/bin/wp user create --allow-root --path=/var/www/html/ ${EDITOR_USR} ${EDITOR_MAIL} --role=editor --user_pass="${EDITOR_PASSWD}" --display_name='editor_user' --nickname='ed1t0r' > /dev/null 2>&1
 	echo "✅ Users Created"
+fi
+
+if ! /usr/local/bin/wp theme list --allow-root --path=/var/www/html/ | grep -q uniblock; then
+	/usr/local/bin/wp theme install uniblock --allow-root --path=/var/www/html/ > /dev/null 2>&1
+	/usr/local/bin/wp theme activate uniblock  --allow-root --path=/var/www/html/ > /dev/null 2>&1
 fi
 echo "ℹ️  Running php-fpm"
 php-fpm7 -F -R

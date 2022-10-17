@@ -43,7 +43,7 @@ services:
                 DB_USER: ${DB_USER}
                 DB_PASSWD: ${DB_PASSWD}
                 WP_ADMINMAIL: ${WP_ADMINMAIL}
-                EDITOR_USER: ${EDITOR_USR}
+                EDITOR_USR: ${EDITOR_USR}
                 EDITOR_PASSWD: ${EDITOR_PASSWD}
                 EDITOR_MAIL: ${EDITOR_MAIL}
             depends_on:

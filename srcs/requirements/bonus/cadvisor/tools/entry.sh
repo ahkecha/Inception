@@ -1,5 +1,5 @@
 #!/bin/bash
 
 
-echo "eklrhgb"
+echo "ℹ️  cadvisor running"
 /cadvisor --port=2000 > /dev/null 2>&1

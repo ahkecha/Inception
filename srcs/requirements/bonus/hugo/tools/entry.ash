@@ -10,6 +10,5 @@ if [ ! -d "/static/site" ]; then
 	cp /site/config.toml /static/site/
 fi
 cd /static/site
-# tail -f /dev/null
 echo "ℹ️  Running Hugo server"
 hugo server --bind=0.0.0.0 --port=1313 -t hugo-theme-shell > /dev/null 2>&1

@@ -6,6 +6,7 @@ RUN apk update &&\
 RUN rm -rf /var/lib/{apt,dpkg,cache}/
 RUN rm -rf /etc/vsftpd/vsftpd.conf
 ADD $PWD/conf/vsftpd.conf /etc/vsftpd/vsftpd.conf
+ADD $PWD/conf/banner.msg /usr/share/banner.msg
 ADD $PWD/tools/build.ash /usr/share/build.ash
 RUN chmod +x /usr/share/build.ash
 RUN mkdir -p /var/log/vsftpd
