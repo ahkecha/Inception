@@ -8,7 +8,8 @@ CREATE USER IF NOT EXISTS ${DB_USER}@'%' IDENTIFIED BY '${DB_PASSWD}';
 GRANT ALL PRIVILEGES ON ${DB_NAME}.* to ${DB_USER}@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 EOF
-/etc/init.d/mysql start
-mysql_install_db --basedir=/usr --datadir=/database/mysql
+mysql_install_db --basedir=/usr --datadir=/var/lib/mysql
+service mysql start
 mysql -u root < /usr/share/init.sql
+
 

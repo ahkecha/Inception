@@ -7,5 +7,3 @@ outfile = open("/var/www/html/wp-config.php", "w+")
 for l in buf:
 	outfile.write(l)
 print("ℹ️  Added redis config to wp-config.php")
-
-

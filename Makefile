@@ -1,7 +1,9 @@
-all:
+all-build:
 	@mkdir -m 777 -p /home/ahkecha/data/mariadb
 	@mkdir -m 777 -p /home/ahkecha/data/wordpress
 	docker-compose -f srcs/docker-compose.yaml up --build
+all:
+	docker-compose -f srcs/docker-compose.yaml up
 
 up:
 	docker-compose -f srcs/docker-compose.yaml up

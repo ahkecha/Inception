@@ -8,5 +8,4 @@ RUN rm -rf /site
 RUN mkdir /site
 ADD $PWD/conf/config.toml /site/
 RUN chmod +x /usr/local/bin/entry.ash
-EXPOSE 1313
 ENTRYPOINT [ "/usr/local/bin/entry.ash" ]
